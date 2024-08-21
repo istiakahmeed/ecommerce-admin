@@ -3,8 +3,8 @@ import { format } from "date-fns";
 
 import { formatter } from "@/lib/utils";
 
-import ProductClient from "./components/client";
 import { ProductColumn } from "./components/columns";
+import ProductClient from "./components/ProductClient";
 
 const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
   const products = await prismadb.product.findMany({
@@ -35,6 +35,7 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
+        {/* <ProductClient data={formattedProducts} /> */}
         <ProductClient data={formattedProducts} />
       </div>
     </div>
