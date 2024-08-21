@@ -12,6 +12,7 @@ const SetupPage = () => {
       onOpen();
     }
   }, [isOpen, onOpen]);
+
   return null;
 };
 

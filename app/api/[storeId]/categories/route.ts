@@ -1,6 +1,7 @@
-import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+
+import prismadb from "@/lib/prismadb";
 
 export async function POST(
   req: Request,
@@ -8,18 +9,25 @@ export async function POST(
 ) {
   try {
     const { userId } = auth();
+
     const body = await req.json();
 
     const { name, billboardId } = body;
 
     if (!userId) {
-      return new NextResponse("Unauthentic", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
-    if (!name || !billboardId) {
-      return new NextResponse("Name and billboardId are required", {
+
+    if (!name) {
+      return new NextResponse("Name is required", { status: 400 });
+    }
+
+    if (!billboardId) {
+      return new NextResponse("Billboard ID is required", {
         status: 400,
       });
     }
+
     if (!params.storeId) {
       return new NextResponse("Store ID is required", { status: 400 });
     }
@@ -31,8 +39,9 @@ export async function POST(
       },
     });
 
+    // check to make sure the user can modify this store
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
     const category = await prismadb.category.create({
@@ -42,10 +51,11 @@ export async function POST(
         storeId: params.storeId,
       },
     });
+
     return NextResponse.json(category);
   } catch (error) {
-    console.log("[CATEGORY_POST]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    console.log("[CATEGORIES_POST]", error);
+    return new NextResponse("Internal error", { status: 500 });
   }
 }
 
@@ -57,14 +67,16 @@ export async function GET(
     if (!params.storeId) {
       return new NextResponse("Store ID is required", { status: 400 });
     }
-    const category = await prismadb.category.findMany({
+
+    const categories = await prismadb.category.findMany({
       where: {
         storeId: params.storeId,
       },
     });
-    return NextResponse.json(category);
+
+    return NextResponse.json(categories);
   } catch (error) {
     console.log("[CATEGORIES_GET]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    return new NextResponse("Internal error", { status: 500 });
   }
 }

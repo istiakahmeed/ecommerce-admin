@@ -11,20 +11,23 @@ export default async function DashboardLayout({
   params: { storeId: string };
 }) {
   const { userId } = auth();
+
   if (!userId) {
     redirect("/sign-in");
   }
 
+  // load the store with the id passed from the redirect from the root folder
   const store = await prismadb.store.findFirst({
     where: {
       id: params.storeId,
-      userId: userId,
+      userId,
     },
   });
 
   if (!store) {
     redirect("/");
   }
+
   return (
     <>
       <Navbar />

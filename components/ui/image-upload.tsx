@@ -1,11 +1,11 @@
 "use client";
 
 import { CldUploadWidget } from "next-cloudinary";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
-import { ImagePlus, Trash } from "lucide-react";
 import Image from "next/image";
+import { ImagePlus, Trash } from "lucide-react";
 
 interface ImageUploadProps {
   disabled?: boolean;
@@ -34,7 +34,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   }
   return (
     <div>
-      <div className="mb-4 flex items-start gap-4 flex-col">
+      <div className="mb-4 flex items-center gap-4">
         {value.map((url) => (
           <div
             key={url}

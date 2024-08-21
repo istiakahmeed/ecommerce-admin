@@ -1,7 +1,7 @@
+import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
-import { auth } from "@clerk/nextjs/server";
 
 export async function POST(
   req: Request,
@@ -52,7 +52,7 @@ export async function POST(
 
     return NextResponse.json(color);
   } catch (error) {
-    console.log("[COLOR_POST]", error);
+    console.log("[COLORS_POST]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
@@ -66,13 +66,13 @@ export async function GET(
       return new NextResponse("Store ID is required", { status: 400 });
     }
 
-    const colors = await prismadb.color.findMany({
+    const coloea = await prismadb.color.findMany({
       where: {
         storeId: params.storeId,
       },
     });
 
-    return NextResponse.json(colors);
+    return NextResponse.json(coloea);
   } catch (error) {
     console.log("[COLORS_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
