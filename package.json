@@ -2,12 +2,12 @@
   "name": "ecommerce-admin",
   "version": "0.1.0",
   "private": true,
-  "postinstall": "prisma generate",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.1.5",
