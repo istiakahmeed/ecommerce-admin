@@ -3,8 +3,8 @@ import { format } from "date-fns";
 
 import { formatter } from "@/lib/utils";
 
+import ProductClient from "./components/client";
 import { ProductColumn } from "./components/columns";
-import { ProductClient } from "./components/client";
 
 const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
   const products = await prismadb.product.findMany({
