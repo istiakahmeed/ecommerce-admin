@@ -70,14 +70,19 @@ export default function StoreSwitcher({
                     role="combobox"
                     aria-expanded={open}
                     aria-label="Select a store"
-                    className={cn("w-[200px] justify-between", className)}
+                    className={cn("w-auto md:w-[200px] justify-between min-w-fit", className)}
                 >
                     <StoreIcon className="mr-2 h-4 w-4" />
-                    {currentStore?.label}
-                    <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+                    <span className="truncate hidden md:inline md:min-w-0">
+                        {currentStore?.label}
+                    </span>
+                    <span className="md:hidden">
+                        {currentStore?.label?.slice(0, 10)}
+                    </span>
+                    <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50 flex-shrink-0" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
+            <PopoverContent className="w-[180px] md:w-[200px] p-0">
                 <Command>
                     <CommandList>
                         <CommandInput placeholder="Search store..." />
